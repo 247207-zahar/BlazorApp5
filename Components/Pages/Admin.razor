@@ -203,3 +203,8 @@ tr:hover td {
     <div class="stat-value">Rs. @orders.Sum(o => o.TotalAmount).ToString("N0")</div>
     <div class="stat-sub">↑ This session</div>
 </div>
+<div class="stat-card">
+    <div class="stat-label">Active Orders</div>
+    <div class="stat-value">@orders.Count(o => o.Status != "Delivered" && o.Status != "Cancelled")</div>
+    <div class="stat-sub" style="color:#fa8c16;">In progress</div>
+</div>
