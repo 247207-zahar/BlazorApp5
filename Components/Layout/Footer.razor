@@ -7,3 +7,17 @@
         padding: 3rem 2rem 2rem;
         font-family: 'DM Sans', sans-serif;
     }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 2rem;
+        max-width: 1100px;
+        margin: 0 auto 2rem;
+    }
+
+    @@media(max-width: 600px) {
+        .footer-grid {
+            grid-template-columns: 1fr;
+        }
+    }
