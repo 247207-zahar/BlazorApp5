@@ -3,6 +3,7 @@
 @using BlazorApp5.Services
 
 <PageTitle>FoodPanda - Order Food Online</PageTitle>
+
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
 
 <style>
@@ -11,6 +12,7 @@
         margin: 0;
         padding: 0;
     }
+
     body {
         font-family: 'DM Sans', sans-serif;
         background: #fff;
@@ -35,6 +37,7 @@
             top: -200px;
             right: -100px;
         }
+
         .hero h1 {
             font-family: 'Sora', sans-serif;
             font-size: 3rem;
@@ -48,6 +51,7 @@
             opacity: 0.9;
             margin-bottom: 2rem;
         }
+
     .search-bar {
         display: flex;
         max-width: 550px;
@@ -57,6 +61,7 @@
         overflow: hidden;
         box-shadow: 0 8px 30px rgba(0,0,0,0.15);
     }
+
         .search-bar input {
             flex: 1;
             padding: 1rem 1.5rem;
@@ -78,6 +83,7 @@
             font-family: 'Sora', sans-serif;
             transition: background 0.2s;
         }
+
             .search-bar button:hover {
                 background: #b83209;
             }
@@ -92,6 +98,7 @@
     .stat {
         text-align: center;
     }
+
     .stat-num {
         font-family: 'Sora', sans-serif;
         font-size: 1.8rem;
@@ -104,6 +111,7 @@
         margin-top: 2px;
     }
 
+    /* Categories */
     .section {
         padding: 4rem 2rem;
         max-width: 1100px;
@@ -146,6 +154,7 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(212,56,13,0.1);
         }
+
     .cat-emoji {
         font-size: 2rem;
         display: block;
@@ -157,11 +166,14 @@
         font-weight: 600;
         color: #333;
     }
+
+    /* Restaurant cards */
     .restaurants-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 1.5rem;
     }
+
     .restaurant-card {
         background: #fff;
         border-radius: 18px;
@@ -178,6 +190,7 @@
             box-shadow: 0 12px 30px rgba(0,0,0,0.1);
             border-color: #ffd591;
         }
+
     .restaurant-img {
         height: 160px;
         display: flex;
@@ -197,6 +210,7 @@
         font-weight: 700;
         color: #1a1a1a;
     }
+
     .restaurant-meta {
         display: flex;
         gap: 1rem;
@@ -210,6 +224,7 @@
             align-items: center;
             gap: 3px;
         }
+
     .badge {
         display: inline-block;
         background: #fff1e6;
@@ -221,6 +236,7 @@
         margin-top: 0.5rem;
     }
 
+    /* How it works */
     .how-section {
         background: #fef6f0;
         padding: 4rem 2rem;
@@ -234,6 +250,7 @@
         margin-top: 2.5rem;
         flex-wrap: wrap;
     }
+
     .step {
         max-width: 180px;
     }
@@ -264,6 +281,8 @@
         color: #999;
         line-height: 1.5;
     }
+
+    /* CTA */
     .cta-section {
         background: linear-gradient(135deg, #1a1a1a, #333);
         color: #fff;
@@ -300,122 +319,117 @@
             background: #fa541c;
             transform: translateY(-2px);
         }
-    <div class="hero" >
-    </div >
-    <h1 > 🐼 Hungry? <br / > We've Got You!</h1>
-    <p > Order from the best restaurants near you. Fast delivery, great taste.</p >
-    <div class="search-bar" >
-    <input type="text" @ bind="searchQuery" placeholder="Search restaurants or dishes..." / >
-    <button @ onclick="Search" > Search 🔍</button >
-    </div >
-    <div class="hero-stats" >
-    <div class="stat" > <div class="stat-num" > 500 + </div > <div class="stat-lbl" > Restaurants</div > </div >
-    <div class="stat" > <div class="stat-num" > 30min</div > <div class="stat-lbl" > Avg Delivery</div > </div >
-    <div class="stat" > <div class="stat-num" > 50K + </div > <div class="stat-lbl" > Happy Customers</div > </div >
-    </div >
+</style>
 
-    <div class="section" >
-    <div class="section-title" > What are you craving?</div >
-    <div class="section-sub" > Pick a category and explore</div >
-    <div class="categories" >
-    </div >
-    </div >
+<!-- Hero -->
+<div class="hero">
+    <h1>🐼 Hungry? <br />We've Got You!</h1>
+    <p>Order from the best restaurants near you. Fast delivery, great taste.</p>
+    <div class="search-bar">
+        <input type="text" @bind="searchQuery" placeholder="Search restaurants or dishes..." />
+        <button @onclick="Search">Search 🔍</button>
+    </div>
+    <div class="hero-stats">
+        <div class="stat"><div class="stat-num">500+</div><div class="stat-lbl">Restaurants</div></div>
+        <div class="stat"><div class="stat-num">30min</div><div class="stat-lbl">Avg Delivery</div></div>
+        <div class="stat"><div class="stat-num">50K+</div><div class="stat-lbl">Happy Customers</div></div>
+    </div>
+</div>
 
-@foreach (var c a t i n categories)
-    {
-    <a href="/restaurants" class="category-card" >
-    <span class="cat-emoji" >@cat.Emoji </span >
-    <div class="cat-name" >@cat.Name </div >
-    </a >
-    }
-    <div class="section" style="padding-top:0;" >
-    <div class="section-title" > Popular Near You 🔥</div >
-    <div class="section-sub" > Top rated restaurants ordering right now</div >
-    <div class="restaurants-grid" >
-    </div >
-    </div >
-@foreach (var r i n popularRestaurants)
-    {
-        <a href="/restaurants" class="restaurant-card" >
-        <div class="restaurant-img" >@r.Emoji </div >
-        <div class="restaurant-info" >
-        <div class="restaurant-name" >@r.Name </div >
-        <div class="restaurant-meta" >
-        <span > ⭐ @r.Rating </span >
-        <span > 🕐 @r.DeliveryTime min</span >
-        <span > 🛵 Rs. @r.DeliveryFee </span >
-        </div >
-        <span class="badge" >@r.Tag </span >
-        </div >
-        </a >
-}
+<!-- Categories -->
+<div class="section">
+    <div class="section-title">What are you craving?</div>
+    <div class="section-sub">Pick a category and explore</div>
+    <div class="categories">
+        @foreach (var cat in categories)
+        {
+            <a href="/restaurants" class="category-card">
+                <span class="cat-emoji">@cat.Emoji</span>
+                <div class="cat-name">@cat.Name</div>
+            </a>
+        }
+    </div>
+</div>
 
-    <div class="how-section" >
-    <div style="font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:700;color:#1a1a1a;" > How It Works</div >
-    <div style="color:#999;font-size:0.9rem;margin-top:0.4rem;" > Order in 3 simple steps</div >
-    <div class="steps" >
-    </div >
-    </div >
+<!-- Popular Restaurants -->
+<div class="section" style="padding-top:0;">
+    <div class="section-title">Popular Near You 🔥</div>
+    <div class="section-sub">Top rated restaurants ordering right now</div>
+    <div class="restaurants-grid">
+        @foreach (var r in popularRestaurants)
+        {
+            <a href="/restaurants" class="restaurant-card">
+                <div class="restaurant-img">@r.Emoji</div>
+                <div class="restaurant-info">
+                    <div class="restaurant-name">@r.Name</div>
+                    <div class="restaurant-meta">
+                        <span>⭐ @r.Rating</span>
+                        <span>🕐 @r.DeliveryTime min</span>
+                        <span>🛵 Rs. @r.DeliveryFee</span>
+                    </div>
+                    <span class="badge">@r.Tag</span>
+                </div>
+            </a>
+        }
+    </div>
+</div>
 
-    <div class="step" >
-    <div class="step-icon" > 📍</div >
-    <h3 > Choose Location</h3 >
-    <p > Enter your delivery address and we find restaurants near you</p >
-    </div >
+<!-- How it works -->
+<div class="how-section">
+    <div style="font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:700;color:#1a1a1a;">How It Works</div>
+    <div style="color:#999;font-size:0.9rem;margin-top:0.4rem;">Order in 3 simple steps</div>
+    <div class="steps">
+        <div class="step">
+            <div class="step-icon">📍</div>
+            <h3>Choose Location</h3>
+            <p>Enter your delivery address and we find restaurants near you</p>
+        </div>
+        <div class="step">
+            <div class="step-icon">🍔</div>
+            <h3>Pick Your Food</h3>
+            <p>Browse menus, add items to cart and customize your order</p>
+        </div>
+        <div class="step">
+            <div class="step-icon">🛵</div>
+            <h3>Fast Delivery</h3>
+            <p>Track your rider in real time and enjoy your meal</p>
+        </div>
+    </div>
+</div>
 
-    <div class="step" >
-    <div class="step-icon" > 🍔</div >
-    <h3 > Pick Your Food</h3 >
-    <p > Browse menus, add items to cart and customize your order</p >
-    </div >
+<!-- CTA -->
+<div class="cta-section">
+    <h2>Ready to Order? 🍕</h2>
+    <p>Join 50,000+ customers enjoying delicious food delivered fast</p>
+    <a href="/register" class="cta-btn">Get Started Free →</a>
+</div>
 
-    <div class="step" >
-    <div class="step-icon" > 🛵</div >
-    <h3 > Fast Delivery</h3 >
-    <p > Track your rider in real time and enjoy your meal</p >
-    </div >
-
-    <div class="cta-section" >
-    <h2 > Ready to Order? 🍕</h2 >
-    <p > Join 50, 000 + customers enjoying delicious food delivered fast</p >
-    <a href="/register" class="cta-btn" > Get Started Free →</a >
-    </div >
 @code {
-    private string searchQuery = " ";
-}
+    private string searchQuery = "";
 
-    private void Search() {
+    private void Search()
+    {
         // Navigate to restaurants with search query
     }
 
-    record CategoryItem(string Emoji, string Name);
-    record RestaurantPreview(string Name, string Emoji, double Rating, int DeliveryTime, int DeliveryFee, string Tag);
     private List<CategoryItem> categories = new()
-{
-    new("🍔", "Burgers"),
-    new("🍕", "Pizza"),
-    new("🍛", "Biryani"),
-    new("🍗", "Chicken"),
-};
-    new("🥖", "Sandwiches"),
-    new("🍜", "Noodles"),
-    new("🧁", "Desserts"),
-    new("🥗", "Healthy"),
-    new("🍣", "Sushi"),
-    new("☕", "Drinks"),
-    new("🌮", "Wraps"),
-    new("🍩", "Bakery")
+    {
+        new("🍔", "Burgers"), new("🍕", "Pizza"), new("🍛", "Biryani"),
+        new("🍗", "Chicken"), new("🥖", "Sandwiches"), new("🍜", "Noodles"),
+        new("🧁", "Desserts"), new("🥗", "Healthy"), new("🍣", "Sushi"),
+        new("☕", "Drinks"), new("🌮", "Wraps"), new("🍩", "Bakery")
+    };
 
     private List<RestaurantPreview> popularRestaurants = new()
-{
-    new("KFC Pakistan", "🍗", 4.5, 25, 80, "🔥 Popular"),
-};
-    new("Pizza Hut", "🍕", 4.3, 35, 100, "⚡ Fast Delivery"),
+    {
+        new("KFC Pakistan", "🍗", 4.5, 25, 80, "🔥 Popular"),
+        new("Pizza Hut", "🍕", 4.3, 35, 100, "⚡ Fast Delivery"),
+        new("Biryani Centre", "🍛", 4.7, 40, 60, "⭐ Top Rated"),
+        new("McDonald's", "🍔", 4.4, 20, 80, "🔥 Popular"),
+        new("Subway", "🥖", 4.1, 30, 70, "🥗 Healthy"),
+        new("Hardee's", "🍔", 4.2, 28, 90, "⚡ Fast Delivery"),
+    };
 
-    new("Biryani Centre", "🍛", 4.7, 40, 60, "⭐ Top Rated"),
-
-    new("McDonald's", "🍔", 4.4, 20, 80, "🔥 Popular"),
-
-    new("Subway", "🥖", 4.1, 30, 70, "🥗 Healthy"),
-
-    new("Hardee's", "🍔", 4.2, 28, 90, "⚡ Fast Delivery"),
+    record CategoryItem(string Emoji, string Name);
+    record RestaurantPreview(string Name, string Emoji, double Rating, int DeliveryTime, int DeliveryFee, string Tag);
+}
