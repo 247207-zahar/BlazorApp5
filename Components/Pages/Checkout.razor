@@ -166,7 +166,10 @@
 
        @if (cartItems == null || !cartItems.Any())
     {
-
+        <div class="section-card" style="max-width:500px;margin:0 auto; text-align:center;">
+            <p>Your cart is empty!</p>
+            <a href="/" class="place-order-btn" style="text-decoration:none; margin-top:10px;">Go to Menu</a>
+        </div>
     }
 
 
