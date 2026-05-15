@@ -213,3 +213,7 @@ tr:hover td {
     <div class="stat-value">@orders.Count(o => o.Status == "Delivered")</div>
     <div class="stat-sub" style="color:#389e0d;">Completed</div>
 </div>
+<div class="tabs">
+    <button class="tab-btn @(activeTab == "orders" ? "active" : "")" @onclick='() => activeTab = "orders"'>📦 Orders</button>
+    <button class="tab-btn @(activeTab == "restaurants" ? "active" : "")" @onclick='() => activeTab = "restaurants"'>🍽️ Restaurants</button>
+</div>
