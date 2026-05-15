@@ -152,4 +152,10 @@
     {
         StateHasChanged();
     }
+    public void Dispose()
+    {
+        CartService.OnCartChanged -= StateHasChanged;
+        Navigation.LocationChanged -= HandleLocationChanged;
+    }
+}
 
