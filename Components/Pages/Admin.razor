@@ -322,3 +322,9 @@ private List<Order> orders = new();
         {
         orders = await OrderService.GetCustomerOrdersAsync(0);
         }
+        private async Task UpdateStatus(Order order, string newStatus)
+        {
+        order.Status = newStatus;
+        await OrderService.UpdateStatusAsync(order.Id, newStatus);
+        StateHasChanged();
+        }
