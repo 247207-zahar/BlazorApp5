@@ -259,3 +259,12 @@ tr:hover td {
 <td>
     <span class="badge badge-@order.Status.ToLower().Replace(" ", "-")">@order.Status</span>
 </td>
+<td>
+    <select class="status-select" value="@order.Status" @onchange="e => UpdateStatus(order, e.Value?.ToString() ?? order.Status)">
+        <option>Placed</option>
+        <option>Preparing</option>
+        <option>On the way</option>
+        <option>Delivered</option>
+        <option>Cancelled</option>
+    </select>
+</td>
