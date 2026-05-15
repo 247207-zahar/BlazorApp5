@@ -390,3 +390,10 @@
 
     record CategoryItem(string Emoji, string Name);
     record RestaurantPreview(string Name, string Emoji, double Rating, int DeliveryTime, int DeliveryFee, string Tag);
+    private List<CategoryItem> categories = new()
+{
+    new("🍔", "Burgers"),
+    new("🍕", "Pizza"),
+    new("🍛", "Biryani"),
+    new("🍗", "Chicken"),
+};
