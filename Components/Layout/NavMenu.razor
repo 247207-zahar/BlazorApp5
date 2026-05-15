@@ -141,4 +141,15 @@
         <a href="/register" class="nav-btn btn-filled">Sign Up</a>
     </div>
 </nav>
+@code {
+    protected override void OnInitialized()
+    {
+        CartService.OnCartChanged += StateHasChanged;
+        Navigation.LocationChanged += HandleLocationChanged;
+    }
+
+    private void HandleLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        StateHasChanged();
+    }
 
