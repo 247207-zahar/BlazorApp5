@@ -7,324 +7,350 @@
 
 <PageTitle>Admin - FoodPanda</PageTitle>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 
-.admin-page {
-    font-family: 'DM Sans', sans-serif;
-    background: #f5f5f5;
-    min-height: 100vh;
-}
-.admin-header {
-    background: #1a1a1a;
-    color: #fff;
-    padding: 1.25rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.admin-header h1 {
-    font-family: 'Sora', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-.admin-badge {
-    background: #d4380d;
-    color: #fff;
-    padding: 3px 12px;
-    border-radius: 50px;
-    font-size: 0.78rem;
-    font-weight: 600;
-}
-.admin-body {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-.stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-.stat-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 1.25rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-.stat-label {
-    font-size: 0.78rem;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-}
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-.stat-value {
-    font-family: 'Sora', sans-serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-top: 4px;
-}
+    .admin-page {
+        font-family: 'DM Sans', sans-serif;
+        background: #f5f5f5;
+        min-height: 100vh;
+    }
 
-.stat-sub {
-    font-size: 0.78rem;
-    color: #389e0d;
-    margin-top: 3px;
-}
-.section-card {
-    background: #fff;
-    border-radius: 18px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    margin-bottom: 1.5rem;
-}
-.section-title {
-    font-family: 'Sora', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-bottom: 1.25rem;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+    .admin-header {
+        background: #1a1a1a;
+        color: #fff;
+        padding: 1.25rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-th {
-    text-align: left;
-    font-size: 0.78rem;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    padding: 0 0.75rem 0.75rem;
-    font-weight: 600;
-}
+        .admin-header h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
 
-td {
-    padding: 0.85rem 0.75rem;
-    font-size: 0.88rem;
-    color: #333;
-    border-bottom: 1px solid #f5f5f5;
-    vertical-align: middle;
-}
-tr:last-child td {
-    border-bottom: none;
-}
+    .admin-badge {
+        background: #d4380d;
+        color: #fff;
+        padding: 3px 12px;
+        border-radius: 50px;
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
 
-tr:hover td {
-    background: #fafafa;
-}
-.status-select {
-    padding: 4px 8px;
-    border-radius: 8px;
-    border: 1.5px solid #e8e8e8;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
-    outline: none;
-    cursor: pointer;
-    background: #fafafa;
-}
-.badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-.badge-placed {
-    background: #e6f7ff;
-    color: #096dd9;
-}
+    .admin-body {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-.badge-preparing {
-    background: #fff7e6;
-    color: #d46b08;
-}
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
 
-.badge-on-the-way {
-    background: #f0f5ff;
-    color: #2f54eb;
-}
+    .stat-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 1.25rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
 
-.badge-delivered {
-    background: #f6ffed;
-    color: #389e0d;
-}
+    .stat-label {
+        font-size: 0.78rem;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
 
-.badge-cancelled {
-    background: #fff1f0;
-    color: #cf1322;
-}
-.tabs {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
+    .stat-value {
+        font-family: 'Sora', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-top: 4px;
+    }
 
-.tab-btn {
-    padding: 0.5rem 1.25rem;
-    border-radius: 50px;
-    border: 1.5px solid #e8e8e8;
-    background: #fff;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    font-size: 0.88rem;
-    cursor: pointer;
-    color: #555;
-    transition: all 0.2s;
-}
-.tab-btn.active {
-    background: #1a1a1a;
-    color: #fff;
-    border-color: #1a1a1a;
-}
+    .stat-sub {
+        font-size: 0.78rem;
+        color: #389e0d;
+        margin-top: 3px;
+    }
+
+    .section-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+        font-family: 'Sora', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 1.25rem;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        text-align: left;
+        font-size: 0.78rem;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        padding: 0 0.75rem 0.75rem;
+        font-weight: 600;
+    }
+
+    td {
+        padding: 0.85rem 0.75rem;
+        font-size: 0.88rem;
+        color: #333;
+        border-bottom: 1px solid #f5f5f5;
+        vertical-align: middle;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:hover td {
+        background: #fafafa;
+    }
+
+    .status-select {
+        padding: 4px 8px;
+        border-radius: 8px;
+        border: 1.5px solid #e8e8e8;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.8rem;
+        outline: none;
+        cursor: pointer;
+        background: #fafafa;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .badge-placed {
+        background: #e6f7ff;
+        color: #096dd9;
+    }
+
+    .badge-preparing {
+        background: #fff7e6;
+        color: #d46b08;
+    }
+
+    .badge-on-the-way {
+        background: #f0f5ff;
+        color: #2f54eb;
+    }
+
+    .badge-delivered {
+        background: #f6ffed;
+        color: #389e0d;
+    }
+
+    .badge-cancelled {
+        background: #fff1f0;
+        color: #cf1322;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .tab-btn {
+        padding: 0.5rem 1.25rem;
+        border-radius: 50px;
+        border: 1.5px solid #e8e8e8;
+        background: #fff;
+        font-family: 'DM Sans', sans-serif;
+        font-weight: 500;
+        font-size: 0.88rem;
+        cursor: pointer;
+        color: #555;
+        transition: all 0.2s;
+    }
+
+        .tab-btn.active {
+            background: #1a1a1a;
+            color: #fff;
+            border-color: #1a1a1a;
+        }
+</style>
+
 <div class="admin-page">
+    <div class="admin-header">
+        <h1>🐼 FoodPanda Admin</h1>
+        <span class="admin-badge">Admin Panel</span>
+    </div>
+
+    <div class="admin-body">
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-label">Total Orders</div>
+                <div class="stat-value">@orders.Count</div>
+                <div class="stat-sub">↑ Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Revenue</div>
+                <div class="stat-value">Rs. @orders.Sum(o => o.TotalAmount).ToString("N0")</div>
+                <div class="stat-sub">↑ This session</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Active Orders</div>
+                <div class="stat-value">@orders.Count(o => o.Status != "Delivered" && o.Status != "Cancelled")</div>
+                <div class="stat-sub" style="color:#fa8c16;">In progress</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Delivered</div>
+                <div class="stat-value">@orders.Count(o => o.Status == "Delivered")</div>
+                <div class="stat-sub" style="color:#389e0d;">Completed</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn @(activeTab == "orders" ? "active" : "")" @onclick='() => activeTab = "orders"'>📦 Orders</button>
+            <button class="tab-btn @(activeTab == "restaurants" ? "active" : "")" @onclick='() => activeTab = "restaurants"'>🍽️ Restaurants</button>
+        </div>
+
+        <!-- Orders Table -->
+        @if (activeTab == "orders")
+        {
+            <div class="section-card">
+                <div class="section-title">All Orders</div>
+                @if (!orders.Any())
+                {
+                    <div style="text-align:center;padding:2rem;color:#ccc;">No orders yet</div>
+                }
+                else
+                {
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Address</th>
+                                <th>Amount</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in orders)
+                            {
+                                <tr>
+                                    <td><strong>#@order.Id</strong></td>
+                                    <td>@order.CustomerName<br /><span style="color:#999;font-size:0.78rem;">@order.Phone</span></td>
+                                    <td style="max-width:160px;font-size:0.82rem;">@order.DeliveryAddress</td>
+                                    <td><strong>Rs. @order.TotalAmount.ToString("N0")</strong></td>
+                                    <td>@order.PaymentMethod</td>
+                                    <td>
+                                        <span class="badge badge-@order.Status.ToLower().Replace(" ", "-")">@order.Status</span>
+                                    </td>
+                                    <td>
+                                        <select class="status-select" value="@order.Status" @onchange="e => UpdateStatus(order, e.Value?.ToString() ?? order.Status)">
+                                            <option>Placed</option>
+                                            <option>Preparing</option>
+                                            <option>On the way</option>
+                                            <option>Delivered</option>
+                                            <option>Cancelled</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        }
+
+        <!-- Restaurants Table -->
+        @if (activeTab == "restaurants")
+        {
+            <div class="section-card">
+                <div class="section-title">Restaurants</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Restaurant</th>
+                            <th>Cuisine</th>
+                            <th>Rating</th>
+                            <th>Delivery Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in restaurants)
+                        {
+                            <tr>
+                                <td>@r.Emoji <strong>@r.Name</strong></td>
+                                <td>@r.Cuisine</td>
+                                <td>⭐ @r.Rating</td>
+                                <td>🕐 @r.DeliveryTimeMinutes min</td>
+                                <td>
+                                    <span class="badge" style="@(r.IsOpen ? "background:#f6ffed;color:#389e0d;" : "background:#f5f5f5;color:#999;")">
+                                        @(r.IsOpen ? "Open" : "Closed")
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
 </div>
-<div class="admin-header">
-    <h1>🐼 FoodPanda Admin</h1>
-    <span class="admin-badge">Admin Panel</span>
-</div>
-<div class="admin-body">
-</div>
-<div class="stats-row">
-</div>
-<div class="stat-card">
-    <div class="stat-label">Total Orders</div>
-    <div class="stat-value">@orders.Count</div>
-    <div class="stat-sub">↑ Today</div>
-</div>
-<div class="stat-card">
-    <div class="stat-label">Revenue</div>
-    <div class="stat-value">Rs. @orders.Sum(o => o.TotalAmount).ToString("N0")</div>
-    <div class="stat-sub">↑ This session</div>
-</div>
-<div class="stat-card">
-    <div class="stat-label">Active Orders</div>
-    <div class="stat-value">@orders.Count(o => o.Status != "Delivered" && o.Status != "Cancelled")</div>
-    <div class="stat-sub" style="color:#fa8c16;">In progress</div>
-</div>
-<div class="stat-card">
-    <div class="stat-label">Delivered</div>
-    <div class="stat-value">@orders.Count(o => o.Status == "Delivered")</div>
-    <div class="stat-sub" style="color:#389e0d;">Completed</div>
-</div>
-<div class="tabs">
-    <button class="tab-btn @(activeTab == "orders" ? "active" : "")" @onclick='() => activeTab = "orders"'>📦 Orders</button>
-    <button class="tab-btn @(activeTab == "restaurants" ? "active" : "")" @onclick='() => activeTab = "restaurants"'>🍽️ Restaurants</button>
-</div>
-@if (activeTab == "orders")
-{
-}
-<div class="section-card">
-    <div class="section-title">All Orders</div>
-</div>
-@if (!orders.Any())
-{
-    <div style="text-align:center;padding:2rem;color:#ccc;">No orders yet</div>
-}
-<table>
-    <thead>
-        <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Address</th>
-            <th>Amount</th>
-            <th>Payment</th>
-            <th>Status</th>
-            <th>Update</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-@foreach (var order in orders)
-{
-    <tr>
-    </tr>
-}
-<td><strong>#@order.Id</strong></td>
-<td>
-    @order.CustomerName
-    <br />
-    <span style="color:#999;font-size:0.78rem;">@order.Phone</span>
-</td>
-<td style="max-width:160px;font-size:0.82rem;">@order.DeliveryAddress</td>
-<td><strong>Rs. @order.TotalAmount.ToString("N0")</strong></td>
-<td>@order.PaymentMethod</td>
-<td>
-    <span class="badge badge-@order.Status.ToLower().Replace(" ", "-")">@order.Status</span>
-</td>
-<td>
-    <select class="status-select" value="@order.Status" @onchange="e => UpdateStatus(order, e.Value?.ToString() ?? order.Status)">
-        <option>Placed</option>
-        <option>Preparing</option>
-        <option>On the way</option>
-        <option>Delivered</option>
-        <option>Cancelled</option>
-    </select>
-</td>
-@if (activeTab == "restaurants")
-{
-}
-<div class="section-card">
-    <div class="section-title">Restaurants</div>
-    <table>
-        <thead>
-            <tr>
-                <th>Restaurant</th>
-                <th>Cuisine</th>
-                <th>Rating</th>
-                <th>Delivery Time</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
-@foreach (var r in restaurants)
-{
-    <tr>
-    </tr>
-}
-<td>@r.Emoji <strong>@r.Name</strong></td>
-<td>@r.Cuisine</td>
-<td>⭐ @r.Rating</td>
-<td>🕐 @r.DeliveryTimeMinutes min</td>
-<td>
-    <span class="badge" style="@(r.IsOpen ? "background:#f6ffed;color:#389e0d;" : "background:#f5f5f5;color:#999;")">
-        @(r.IsOpen ? "Open" : "Closed")
-    </span>
-</td>
+
 @code {
     private string activeTab = "orders";
-}
-private List<Order> orders = new();
+    private List<Order> orders = new();
+
     private List<Restaurant> restaurants = new()
-{
-    new() { Id=1, Name="KFC Pakistan", Emoji="🍗", Cuisine="Fast Food", Rating=4.5, DeliveryTimeMinutes=25, IsOpen=true },
-};
+    {
+        new() { Id=1, Name="KFC Pakistan",   Emoji="🍗", Cuisine="Fast Food", Rating=4.5, DeliveryTimeMinutes=25, IsOpen=true },
+        new() { Id=2, Name="Pizza Hut",      Emoji="🍕", Cuisine="Pizza",     Rating=4.3, DeliveryTimeMinutes=35, IsOpen=true },
+        new() { Id=3, Name="Biryani Centre", Emoji="🍛", Cuisine="Desi",      Rating=4.7, DeliveryTimeMinutes=40, IsOpen=true },
+        new() { Id=4, Name="McDonald's",     Emoji="🍔", Cuisine="Fast Food", Rating=4.4, DeliveryTimeMinutes=20, IsOpen=true },
+        new() { Id=5, Name="Hardee's",       Emoji="🍔", Cuisine="Fast Food", Rating=4.2, DeliveryTimeMinutes=28, IsOpen=false },
+    };
 
-        new() { Id=2, Name="Pizza Hut", Emoji="🍕", Cuisine="Pizza", Rating=4.3, DeliveryTimeMinutes=35, IsOpen=true },
-
-        new() { Id=3, Name="Biryani Centre", Emoji="🍛", Cuisine="Desi", Rating=4.7, DeliveryTimeMinutes=40, IsOpen=true },
-
-        new() { Id=4, Name="McDonald's", Emoji="🍔", Cuisine="Fast Food", Rating=4.4, DeliveryTimeMinutes=20, IsOpen=true },
-
-        new() { Id=5, Name="Hardee's", Emoji="🍔", Cuisine="Fast Food", Rating=4.2, DeliveryTimeMinutes=28, IsOpen=false },
-
-        protected override async Task OnInitializedAsync()
-        {
+    protected override async Task OnInitializedAsync()
+    {
         orders = await OrderService.GetCustomerOrdersAsync(0);
-        }
-        private async Task UpdateStatus(Order order, string newStatus)
-        {
+    }
+
+    private async Task UpdateStatus(Order order, string newStatus)
+    {
         order.Status = newStatus;
         await OrderService.UpdateStatusAsync(order.Id, newStatus);
         StateHasChanged();
-        }
+    }
+}
