@@ -223,3 +223,7 @@ tr:hover td {
 <div class="section-card">
     <div class="section-title">All Orders</div>
 </div>
+@if (!orders.Any())
+{
+    <div style="text-align:center;padding:2rem;color:#ccc;">No orders yet</div>
+}
