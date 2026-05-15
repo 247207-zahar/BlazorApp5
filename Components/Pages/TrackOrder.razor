@@ -173,3 +173,8 @@ else
 }
 <div class="grid">
 </div>
+@foreach (var r in FilteredRestaurants)
+{
+    <a href="/menu/@r.Id" class="card">
+    </a>
+}
