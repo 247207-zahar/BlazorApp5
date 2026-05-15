@@ -165,3 +165,9 @@
 {
     <button class="filter-btn @(activeFilter == f ? "active" : "")" @onclick="() => activeFilter = f">@f</button>
 }
+@if (FilteredRestaurants.Any())
+{
+}
+else
+{
+}
