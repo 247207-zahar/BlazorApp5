@@ -198,3 +198,8 @@ tr:hover td {
     <div class="stat-value">@orders.Count</div>
     <div class="stat-sub">↑ Today</div>
 </div>
+<div class="stat-card">
+    <div class="stat-label">Revenue</div>
+    <div class="stat-value">Rs. @orders.Sum(o => o.TotalAmount).ToString("N0")</div>
+    <div class="stat-sub">↑ This session</div>
+</div>
