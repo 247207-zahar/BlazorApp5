@@ -209,3 +209,7 @@ else
 private string searchQuery = "";
 private string activeFilter = "All";
 private List<string> filters = new() { "All", "Fast Food", "Desi", "Pizza", "Healthy", "Desserts" };
+    private List<Restaurant> allRestaurants = new()
+{
+    new() { Id=1, Name="KFC Pakistan", Cuisine="Fast Food", Emoji="🍗", Rating=4.5, DeliveryTimeMinutes=25, DeliveryFee=80, IsOpen=true },
+};
