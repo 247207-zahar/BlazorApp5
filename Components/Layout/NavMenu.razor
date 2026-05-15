@@ -118,4 +118,22 @@
         color: #fff;
         border: none;
     }
+</style>
+
+<nav class="navbar">
+    <a href="/" class="nav-logo">🐼 FoodPanda</a>
+
+    <div class="nav-links">
+        <NavLink href="/" class="nav-link" Match="NavLinkMatch.All">Home</NavLink>
+        <NavLink href="restaurants" class="nav-link">Restaurants</NavLink>
+        <NavLink href="dashboard" class="nav-link">My Orders</NavLink>
+    </div>
+
+    <div class="nav-right">
+        <button class="cart-btn" @onclick='() => Navigation.NavigateTo("/checkout")'>
+            🛒 Cart
+            @if (CartService.ItemCount > 0)
+            {
+                <span class="cart-count">@CartService.ItemCount</span>
+            }
 
