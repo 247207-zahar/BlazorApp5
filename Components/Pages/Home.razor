@@ -334,3 +334,18 @@
     <div class="restaurants-grid" >
     </div >
     </div >
+@foreach (var r i n popularRestaurants)
+    {
+        <a href="/restaurants" class="restaurant-card" >
+        <div class="restaurant-img" >@r.Emoji </div >
+        <div class="restaurant-info" >
+        <div class="restaurant-name" >@r.Name </div >
+        <div class="restaurant-meta" >
+        <span > ⭐ @r.Rating </span >
+        <span > 🕐 @r.DeliveryTime min</span >
+        <span > 🛵 Rs. @r.DeliveryFee </span >
+        </div >
+        <span class="badge" >@r.Tag </span >
+        </div >
+        </a >
+}
