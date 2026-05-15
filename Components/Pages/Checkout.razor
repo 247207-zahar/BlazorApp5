@@ -193,8 +193,9 @@
             <div class="section-card">
                     <div class="section-title">Payment Method</div>
                 <div class="payment-options">
-                        <div class="payment-option @(selectedPayment == "cash" ? "selected" : "")" @onclick='() => selectedPayment = "cash"'>💵<br />Cash</div>
-                </div>
+                        <div class="payment-option @(selectedPayment == "cash" ? "selected" : "")" @onclick='() => selectedPayment = "cash"'><br />Cash</div>
+                        <div class="payment-option @(selectedPayment == "card" ? "selected" : "")" @onclick='() => selectedPayment = "card"'><br />Card</div>
+                    </div>
             </div>
 
 
