@@ -161,3 +161,7 @@
 
 <div class="filters">
 </div>
+@foreach (var f in filters)
+{
+    <button class="filter-btn @(activeFilter == f ? "active" : "")" @onclick="() => activeFilter = f">@f</button>
+}
