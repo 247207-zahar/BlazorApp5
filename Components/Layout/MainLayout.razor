@@ -1,0 +1,38 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    @* Sidebar ko yahan se hata diya hai taaki menu top par aa jaye *@
+
+    <main>
+        @* NavMenu ko top par rakhein taaki poori width mile *@
+        <NavMenu />
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+<style>
+    /* Default sidebar ko hide karne ke liye */
+    .sidebar {
+        display: none !important;
+    }
+
+    /* Main content ko poori screen par phailane ke liye */
+    main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .page {
+        display: block !important; /* Sidebar layout ko khatam karne ke liye */
+    }
+
+    /* Top row (About link) agar zaroorat nahi toh hide kar dein */
+    .top-row {
+        display: none;
+    }
+</style>

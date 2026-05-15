@@ -1,0 +1,205 @@
+﻿@page "/login"
+@rendermode InteractiveServer
+@using BlazorApp5.Models
+@inject NavigationManager Navigation
+
+<PageTitle>Login - FoodPanda</PageTitle>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    .auth-page {
+        font-family: 'DM Sans', sans-serif;
+        background: linear-gradient(135deg, #d4380d, #fa8c16);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .auth-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .auth-logo {
+        text-align: center;
+        font-family: 'Sora', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #d4380d;
+        margin-bottom: 0.5rem;
+    }
+
+    .auth-title {
+        text-align: center;
+        font-family: 'Sora', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 0.3rem;
+    }
+
+    .auth-sub {
+        text-align: center;
+        color: #999;
+        font-size: 0.88rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.1rem;
+    }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #e8e8e8;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            background: #fafafa;
+            transition: border-color 0.2s;
+        }
+
+            .form-group input:focus {
+                border-color: #d4380d;
+                background: #fff;
+            }
+
+    .error-msg {
+        background: #fff1f0;
+        border: 1px solid #ffa39e;
+        color: #cf1322;
+        padding: 0.65rem 1rem;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 0.9rem;
+        background: #d4380d;
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-family: 'Sora', sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 0.5rem;
+    }
+
+        .submit-btn:hover {
+            background: #b83209;
+            transform: translateY(-1px);
+        }
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.88rem;
+        color: #999;
+    }
+
+        .auth-footer a {
+            color: #d4380d;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #f0f0f0;
+        }
+
+        .divider span {
+            color: #ccc;
+            font-size: 0.8rem;
+        }
+</style>
+
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="auth-logo">🐼 FoodPanda</div>
+        <div class="auth-title">Welcome Back!</div>
+        <div class="auth-sub">Sign in to your account</div>
+
+        @if (!string.IsNullOrEmpty(errorMsg))
+        {
+            <div class="error-msg">⚠️ @errorMsg</div>
+        }
+
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" @bind="email" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" @bind="password" placeholder="Enter your password" />
+        </div>
+
+        <button class="submit-btn" @onclick="HandleLogin">Sign In →</button>
+
+        <div class="divider"><span>or</span></div>
+
+        <div class="auth-footer">
+            Don't have an account? <a href="/register">Sign up free</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string email = "";
+    private string password = "";
+    private string errorMsg = "";
+
+    private void HandleLogin()
+    {
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        {
+            errorMsg = "Please enter your email and password.";
+            return;
+        }
+        // Demo login — replace with real auth later
+        if (email == "admin@foodpanda.pk" && password == "admin123")
+        {
+            Navigation.NavigateTo("/admin");
+            return;
+        }
+        Navigation.NavigateTo("/dashboard");
+    }
+}
+

@@ -1,0 +1,300 @@
+﻿@page "/checkout"
+@rendermode InteractiveServer
+@using BlazorApp5.Models
+@using BlazorApp5.Services
+@inject CartService CartService
+@inject OrderService OrderService
+@inject NavigationManager Navigation
+
+<PageTitle>Checkout - FoodPanda</PageTitle>
+
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body, .checkout-root {
+        font-family: 'DM Sans', sans-serif;
+        background: #fef6f0;
+        min-height: 100vh;
+        color: #1a1a1a;
+    }
+
+    .checkout-root {
+        padding: 2rem 1rem;
+    }
+
+    .checkout-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+        .checkout-header h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d4380d;
+        }
+
+    .checkout-grid {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    /* Fixed Media Query */
+    @@media (max-width: 900px) {
+        .checkout-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .section-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 1.75rem;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+        margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+        font-family: 'Sora', sans-serif;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 6px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1.5px solid #e8e8e8;
+            border-radius: 12px;
+        }
+
+    .payment-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+    }
+
+    .payment-option {
+        border: 1.5px solid #e8e8e8;
+        border-radius: 12px;
+        padding: 0.75rem;
+        cursor: pointer;
+        text-align: center;
+        background: #fafafa;
+    }
+
+        .payment-option.selected {
+            border-color: #d4380d;
+            background: #fff5f0;
+        }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.9rem 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .cart-item-img {
+        width: 50px;
+        height: 50px;
+        background: #ffe0cc;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .place-order-btn {
+        width: 100%;
+        padding: 1rem;
+        background: #d4380d;
+        color: #fff;
+        border: none;
+        border-radius: 14px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+        .place-order-btn:hover {
+            background: #b83209;
+        }
+
+    .success-toast {
+        position: fixed;
+        top: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #389e0d;
+        color: #fff;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        z-index: 1000;
+    }
+</style>
+
+<div class="checkout-root">
+    <div class="checkout-header">
+        <h1>🛒 Your Cart</h1>
+        <p>Review your order and complete checkout</p>
+    </div>
+
+    @if (cartItems == null || !cartItems.Any())
+    {
+        <div class="section-card" style="max-width:500px;margin:0 auto; text-align:center;">
+            <p>Your cart is empty!</p>
+            <a href="/" class="place-order-btn" style="text-decoration:none; margin-top:10px;">Go to Menu</a>
+        </div>
+    }
+    else
+    {
+        <div class="checkout-grid">
+            <div>
+                <div class="section-card">
+                    <div class="section-title">📍 Delivery Details</div>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" @bind="customerName" />
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" @bind="phone" />
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea @bind="address" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-title">💳 Payment Method</div>
+                    <div class="payment-options">
+                        <div class="payment-option @(selectedPayment == "cash" ? "selected" : "")" @onclick='() => selectedPayment = "cash"'>💵<br />Cash</div>
+                        <div class="payment-option @(selectedPayment == "card" ? "selected" : "")" @onclick='() => selectedPayment = "card"'>💳<br />Card</div>
+                        <div class="payment-option @(selectedPayment == "easypaisa" ? "selected" : "")" @onclick='() => selectedPayment = "easypaisa"'>📱<br />Mobile</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">🧾 Order Summary</div>
+                @foreach (var item in cartItems)
+                {
+                    <div class="cart-item">
+                        <div class="cart-item-img">@item.Emoji</div>
+                        <div style="flex:1">
+                            <div class="cart-item-name">@item.Name</div>
+                            <div style="font-size:0.8rem; color:#888">Qty: @item.Quantity</div>
+                        </div>
+                        <div style="font-weight:600">Rs. @(item.Price* item.Quantity)</div>
+                    </div>
+                }
+
+                <div style="margin-top:1.5rem; border-top:1px dashed #eee; padding-top:1rem;">
+                    <div style="display:flex; justify-content:space-between"><span>Subtotal</span><span>Rs. @Subtotal</span></div>
+                    <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.2rem; color:#d4380d; margin-top:10px;">
+                        <span>Total</span><span>Rs. @Total</span>
+                    </div>
+                </div>
+
+                <button class="place-order-btn" @onclick="PlaceOrder" disabled="@isPlacing" style="margin-top:20px;">
+                    @(isPlacing ? "Processing..." : "Place Order →")
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+@if (showSuccess)
+{
+    <div class="success-toast">✓ Order placed! Redirecting...</div>
+}
+
+@code {
+    private List<CartItemViewModel> cartItems = new();
+    private string customerName = "";
+    private string phone = "";
+    private string address = "";
+    private string area = "";
+    private string city = "";
+    private string notes = "";
+    private string selectedPayment = "cash";
+    private bool isPlacing = false;
+    private bool showSuccess = false;
+
+    private int Subtotal => cartItems.Sum(i => i.Price * i.Quantity);
+    private int Total => Subtotal + (Subtotal > 0 ? 80 : 0);
+
+    protected override void OnInitialized()
+    {
+        var itemsFromService = CartService.GetItems();
+        if (itemsFromService != null && itemsFromService.Any())
+        {
+            cartItems = itemsFromService.Select(i => new CartItemViewModel
+            {
+             Name = i.Key?.Name ?? "Item",
+                Price = (int)(i.Key?.Price ?? 0),
+                Quantity = i.Value,
+                Emoji = "🍔"
+            }).ToList();
+        }
+    }
+
+    private async Task PlaceOrder()
+    {
+        if (string.IsNullOrWhiteSpace(customerName) || string.IsNullOrWhiteSpace(address)) return;
+
+        isPlacing = true;
+
+        var order = new Order
+        {
+            // Yahan 'Address' ki jagah 'DeliveryAddress' likhein
+            DeliveryAddress = $"{address}, {area}, {city}",
+            CustomerName = customerName,
+            Phone = phone,
+            Notes = notes,
+            PaymentMethod = selectedPayment,
+            TotalAmount = Total,
+            Status = "Placed",
+            PlacedAt = DateTime.Now
+        };
+
+        await OrderService.PlaceOrderAsync(order);
+        CartService.ClearCart();
+
+        showSuccess = true;
+        await Task.Delay(2000);
+        Navigation.NavigateTo("/");
+    }
+    public class CartItemViewModel
+    {
+        public string Name { get; set; } = "";
+        public int Price { get; set; }
+        public int Quantity { get; set; }
+        public string Emoji { get; set; } = "🍔";
+    }
+}

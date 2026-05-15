@@ -1,0 +1,212 @@
+﻿@page "/menu/{RestaurantId:int}"
+@rendermode InteractiveServer
+@using BlazorApp5.Models
+@using BlazorApp5.Services
+@implements IDisposable
+@inject CartService CartService
+@inject NavigationManager Navigation
+
+<style>
+    .menu-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: 'Segoe UI', sans-serif;
+        display: grid;
+        grid-template-columns: 1fr 350px; /* Left side items, Right side cart */
+        gap: 30px;
+    }
+
+    /* Restaurant Header */
+    .res-header {
+        padding: 40px;
+        background: #c2175b;
+        color: white;
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
+
+    /* Category Filter Buttons */
+    .cat-nav {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+    }
+
+    .cat-btn {
+        padding: 8px 20px;
+        border-radius: 20px;
+        border: 1px solid #d4380d;
+        background: white;
+        color: #d4380d;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+        .cat-btn.active {
+            background: #d4380d;
+            color: white;
+        }
+
+    /* Menu Items Grid */
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .item-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        background: white;
+        transition: 0.3s;
+    }
+
+        .item-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+    .item-details h3 {
+        margin: 0;
+        font-size: 1.1rem;
+    }
+
+    .item-details p {
+        color: #666;
+        font-size: 0.9rem;
+        margin: 5px 0;
+    }
+
+    .price-tag {
+        font-weight: bold;
+        color: #d4380d;
+    }
+
+    .add-circle {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: none;
+        background: #d4380d;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Side Cart Panel */
+    .cart-panel {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 15px;
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+    }
+
+    .checkout-btn {
+        width: 100%;
+        padding: 12px;
+        background: #d4380d;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="menu-container">
+    <div class="main-content">
+        @if (restaurant != null)
+        {
+            <div class="res-header">
+                <h1>@restaurant.Emoji @restaurant.Name</h1>
+                <p>⭐ @restaurant.Rating | 🕑 @restaurant.DeliveryTimeMinutes min | 🛵 Rs. @restaurant.DeliveryFee</p>
+            </div>
+        }
+
+        <div class="cat-nav">
+            <button class="cat-btn @(selectedCategory == "All" ? "active" : "")" @onclick='() => selectedCategory = "All"'>All</button>
+            @foreach (var cat in allItems.Select(i => i.Category).Distinct())
+            {
+                <button class="cat-btn @(selectedCategory == cat ? "active" : "")" @onclick='() => selectedCategory = cat'>@cat</button>
+            }
+        </div>
+
+        <div class="menu-grid">
+            @foreach (var item in FilteredItems)
+            {
+                <div class="item-card">
+                    <div class="item-details">
+                        <h3>@item.Emoji @item.Name</h3>
+                        <p>Delicious @item.Category item</p>
+                        <span class="price-tag">Rs. @item.Price</span>
+                    </div>
+                    <button class="add-circle" @onclick="() => AddToCart(item)">+</button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="cart-panel">
+        <h3>Your Cart (@CartService.ItemCount)</h3>
+        <hr />
+        @foreach (var entry in CartService.GetItems())
+        {
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <span>@entry.Key.Name x @entry.Value</span>
+                <span>Rs. @(entry.Key.Price* entry.Value)</span>
+            </div>
+        }
+        <div style="margin-top:20px; border-top:2px solid #ddd; padding-top:10px; font-weight:bold;">
+            <span>Total:</span>
+            <span style="float:right;">Rs. @CartService.Total</span>
+        </div>
+        <button class="checkout-btn" @onclick='() => Navigation.NavigateTo("/checkout")'>Checkout</button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public int RestaurantId { get; set; }
+    private string selectedCategory = "All";
+    private Restaurant? restaurant;
+    private List<MenuItem> allItems = new();
+
+    // Filtering Logic
+    private IEnumerable<MenuItem> FilteredItems => selectedCategory == "All"
+        ? allItems
+        : allItems.Where(i => i.Category == selectedCategory);
+
+    protected override void OnInitialized()
+    {
+        LoadData();
+        CartService.OnCartChanged += StateHasChanged;
+    }
+
+    private void LoadData()
+    {
+        // Sample Restaurant
+        restaurant = new Restaurant { Id = 1, Name = "KFC Pakistan", Emoji = "🍗", Rating = 4.5, DeliveryTimeMinutes = 25, DeliveryFee = 80 };
+
+        // DYNAMIC ITEMS: Yahan Burger aur Pizza dono categories add hain
+        allItems = new List<MenuItem> {
+            new() { Id=1, Name="Zinger Burger", Price=550, Emoji="🍔", Category="Burger" },
+            new() { Id=2, Name="Tower Burger", Price=750, Emoji="🍔", Category="Burger" },
+            new() { Id=3, Name="Peperoni Pizza", Price=1200, Emoji="🍕", Category="Pizza" },
+            new() { Id=4, Name="Cheese Pizza", Price=1100, Emoji="🍕", Category="Pizza" },
+            new() { Id=5, Name="Masala Fries", Price=220, Emoji="🍟", Category="Sides" },
+            new() { Id=6, Name="Mango Shake", Price=180, Emoji="🥤", Category="Drinks" }
+        };
+    }
+
+    private void AddToCart(MenuItem item) => CartService.AddItem(item);
+
+    public void Dispose() => CartService.OnCartChanged -= StateHasChanged;
+}
