@@ -686,6 +686,41 @@
             }
 
 
+            @if (activeTab == "profile")
+            {
+                <div class="section-card" style="max-width:550px;">
+                    <div class="section-header">
+                        <h2>Profile Settings</h2>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+                        <div class="avatar" style="width:60px;height:60px;font-size:1.2rem;">
+                            @GetInitials(customer?.Name ?? "ZA")
+                        </div>
+                        <div>
+                            <div style="font-weight:600;">@(customer?.Name ?? "Zahra Ali")</div>
+                            <div style="font-size:0.8rem;color:#999;">Member since Jan 2024</div>
+                        </div>
+                    </div>
+
+                    <div style="display:grid;gap:1rem;">
+                        <div>
+                            <label style="display:block;font-size:0.78rem;color:#999;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Full Name</label>
+                            <input type="text" value="@(customer?.Name ?? "Zahra Ali")" style="width:100%;padding:0.7rem 1rem;border:1.5px solid #e8e8e8;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;background:#fafafa;" />
+                        </div>
+                        <div>
+                            <label style="display:block;font-size:0.78rem;color:#999;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Email</label>
+                            <input type="email" value="@(customer?.Email ?? "zahra@email.com")" style="width:100%;padding:0.7rem 1rem;border:1.5px solid #e8e8e8;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;background:#fafafa;" />
+                        </div>
+                        <div>
+                            <label style="display:block;font-size:0.78rem;color:#999;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Phone</label>
+                            <input type="tel" value="@(customer?.Phone ?? "+92 300 1234567")" style="width:100%;padding:0.7rem 1rem;border:1.5px solid #e8e8e8;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;background:#fafafa;" />
+                        </div>
+                        <button class="order-btn" style="width:fit-content;">Save Changes</button>
+                    </div>
+                </div>
+            }
+
+
 
 
 
