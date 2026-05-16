@@ -543,7 +543,15 @@
             </button>
 
             <span class="nav-section-label" style="margin-top:1rem;">Account</span>
-
+            <button class="nav-item @(activeTab == "profile" ? "active" : "")" @onclick='() => activeTab = "profile"'>
+                <span class="nav-icon">👤</span> Profile Settings
+            </button>
+            <a href="/track-order" class="nav-item">
+                <span class="nav-icon">🛵</span> Track Active Order
+            </a>
+            <button class="nav-item" style="color:#cf1322;" @onclick="Logout">
+                <span class="nav-icon">🚪</span> Logout
+            </button>
 
 
 
