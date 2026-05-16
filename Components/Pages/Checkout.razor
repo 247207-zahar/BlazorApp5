@@ -283,5 +283,8 @@
         await OrderService.PlaceOrderAsync(order);
         CartService.ClearCart();
 
+        showSuccess = true;
+        await Task.Delay(2000);
+        Navigation.NavigateTo("/");
     }
    }
