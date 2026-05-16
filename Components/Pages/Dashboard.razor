@@ -525,10 +525,10 @@
             <div class="sidebar-logo">🐼 FoodPanda</div>
 
             <div class="sidebar-profile">
-                <div class="avatar">@GetInitials(customer?.Name ?? "A")</div>
+                <div class="avatar">@GetInitials(customer?.Name ?? "ZA")</div>
                 <div>
-                    <div class="profile-name">@(customer?.Name ?? " Ali")</div>
-                    <div class="profile-email">@(customer?.Email ?? "Ali@email.com")</div>
+                    <div class="profile-name">@(customer?.Name ?? "Zahra Ali")</div>
+                    <div class="profile-email">@(customer?.Email ?? "zahra@email.com")</div>
                 </div>
             </div>
             <span class="nav-section-label">Main</span>
@@ -725,7 +725,7 @@
 </div>
 
 
-@code{
+@code {
     private string activeTab = "orders";
     private string orderFilter = "all";
     private Customer? customer;
@@ -735,7 +735,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        customer = new Customer { Name = " Ali", Email = "Ali@email.com", Phone = "+92 311 2345678" };
+        customer = new Customer { Name = "Zahra Ali", Email = "zahra@email.com", Phone = "+92 311 2345678" };
 
         var serviceOrders = await OrderService.GetCustomerOrdersAsync(customer.Id);
         orders = serviceOrders?.Select(o => new OrderViewModel
