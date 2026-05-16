@@ -772,12 +772,18 @@
         _ => orders
     };
 
-      private string GetInitials(string name)
+    private string GetInitials(string name)
     {
         var parts = name.Trim().Split(' ');
         return parts.Length >= 2
             ? $"{parts[0][0]}{parts[1][0]}".ToUpper()
             : name[..Math.Min(2, name.Length)].ToUpper();
+    }
+
+    private string GetGreeting()
+    {
+        var hour = DateTime.Now.Hour;
+        return hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
     }
 
 
