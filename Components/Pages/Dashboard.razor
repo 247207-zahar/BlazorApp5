@@ -810,6 +810,14 @@
         Navigation.NavigateTo("/login");
     }
 
+    private List<OrderViewModel> GetSampleOrders() => new()
+    {
+        new() { Id = 1, RestaurantName = "KFC Pakistan", RestaurantEmoji = "🍗", ItemsSummary = "Zinger Burger × 2, Coleslaw × 1", TotalAmount = 1380, Status = "Delivered", PlacedAt = DateTime.Now.AddDays(-2) },
+        new() { Id = 2, RestaurantName = "Biryani Centre", RestaurantEmoji = "🍛", ItemsSummary = "Chicken Biryani × 3, Raita × 1", TotalAmount = 1650, Status = "On the way", PlacedAt = DateTime.Now.AddHours(-1) },
+        new() { Id = 3, RestaurantName = "Pizza Hut", RestaurantEmoji = "🍕", ItemsSummary = "Pepperoni Large × 1, Garlic Bread", TotalAmount = 2100, Status = "Delivered", PlacedAt = DateTime.Now.AddDays(-5) },
+        new() { Id = 4, RestaurantName = "Subway", RestaurantEmoji = "🥖", ItemsSummary = "Chicken Teriyaki 6\" × 2", TotalAmount = 990, Status = "Cancelled", PlacedAt = DateTime.Now.AddDays(-7) },
+        new() { Id = 5, RestaurantName = "McDonald's", RestaurantEmoji = "🍔", ItemsSummary = "McChicken × 2, McFlurry × 1", TotalAmount = 1220, Status = "Preparing", PlacedAt = DateTime.Now.AddMinutes(-25) },
+    };
 
 
 
