@@ -532,6 +532,15 @@
                 </div>
             </div>
             <span class="nav-section-label">Main</span>
+            <button class="nav-item @(activeTab == "orders" ? "active" : "")" @onclick='() => activeTab = "orders"'>
+                <span class="nav-icon">📦</span> My Orders
+            </button>
+            <button class="nav-item @(activeTab == "favorites" ? "active" : "")" @onclick='() => activeTab = "favorites"'>
+                <span class="nav-icon">❤️</span> Favorites
+            </button>
+            <button class="nav-item @(activeTab == "addresses" ? "active" : "")" @onclick='() => activeTab = "addresses"'>
+                <span class="nav-icon">📍</span> Addresses
+            </button>
 
 
 
