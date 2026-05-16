@@ -253,15 +253,15 @@
         var itemsFromService = CartService.GetItems();
         if (itemsFromService != null && itemsFromService.Any())
         {
-              cartItems = itemsFromService.Select(i => new CartItemViewModel
+            cartItems = itemsFromService.Select(i => new CartItemViewModel
             {
                 Name = i.Key?.Name ?? "Item",
                 Price = (int)(i.Key?.Price ?? 0),
                 Quantity = i.Value,
                 Emoji = "🍔"
             }).ToList();
+        }
     }
-}
 
     private async Task PlaceOrder()
     {
@@ -269,8 +269,15 @@
         isPlacing = true;
 
         var order = new Order
-        {
-
-        }
+            {
+                DeliveryAddress = $"{address}, {area}, {city}",
+                CustomerName = customerName,
+                Phone = phone,
+                Notes = notes,
+                PaymentMethod = selectedPayment,
+                TotalAmount = Total,
+                Status = "Placed",
+                PlacedAt = DateTime.Now
+            };
 
     }
