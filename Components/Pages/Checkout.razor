@@ -246,4 +246,6 @@
     private bool isPlacing = false;
     private bool showSuccess = false;
     private int Subtotal => cartItems.Sum(i => i.Price * i.Quantity);
+    private int Total => Subtotal + (Subtotal > 0 ? 80 : 0);
+
 }
