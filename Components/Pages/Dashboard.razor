@@ -763,8 +763,14 @@
             new() { Type = "Home", FullAddress = "House 12, Street 4, DHA Phase 5, Lahore", IsDefault = true },
             new() { Type = "Office", FullAddress = "3rd Floor, TechHub, MM Alam Road, Gulberg, Lahore", IsDefault = false },
         };
-
     }
+
+    private List<OrderViewModel> FilteredOrders => orderFilter switch
+    {
+        "active" => orders.Where(o => o.Status != "Delivered" && o.Status != "Cancelled").ToList(),
+        "delivered" => orders.Where(o => o.Status == "Delivered").ToList(),
+        _ => orders
+    };
 
 
 
