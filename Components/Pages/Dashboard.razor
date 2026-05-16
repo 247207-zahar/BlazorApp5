@@ -565,6 +565,29 @@
                 <a href="/restaurants" class="order-btn">+ Order Food</a>
             </div>
 
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Orders</div>
+                    <div class="stat-value">@orders.Count</div>
+                    <div class="stat-sub">↑ 3 this month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Amount Spent</div>
+                    <div class="stat-value">Rs. @orders.Sum(o => o.TotalAmount).ToString("N0")</div>
+                    <div class="stat-sub">lifetime total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Delivered</div>
+                    <div class="stat-value">@orders.Count(o => o.Status == "Delivered")</div>
+                    <div class="stat-sub" style="color:#389e0d;">✓ on time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Saved (Promos)</div>
+                    <div class="stat-value">Rs. 840</div>
+                    <div class="stat-sub" style="color:#fa8c16;">🎉 great deals</div>
+                </div>
+            </div>
+
 
            </main>
 
