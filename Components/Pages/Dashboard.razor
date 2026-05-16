@@ -443,5 +443,39 @@
             margin-top: 4px;
         }
 
+    .address-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .address-card {
+        border: 1.5px solid #f0f0f0;
+        border-radius: 14px;
+        padding: 1rem;
+        background: #fafafa;
+        position: relative;
+    }
+
+        .address-card.default {
+            border-color: #d4380d;
+            background: #fff5f0;
+        }
+
+    .address-type {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #d4380d;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+    }
+
+    .address-text {
+        font-size: 0.85rem;
+        color: #444;
+        line-height: 1.5;
+    }
+
    
 </style>
