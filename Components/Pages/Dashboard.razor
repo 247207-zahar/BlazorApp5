@@ -737,6 +737,19 @@
     {
         customer = new Customer { Name = " Ali", Email = "Ali@email.com", Phone = "+92 311 2345678" };
 
+        var serviceOrders = await OrderService.GetCustomerOrdersAsync(customer.Id);
+        orders = serviceOrders?.Select(o => new OrderViewModel
+        {
+            Id = o.Id,
+            RestaurantName = o.RestaurantName ?? "KFC Pakistan",
+            RestaurantEmoji = o.RestaurantEmoji ?? "🍗",
+            ItemsSummary = o.ItemsSummary ?? "Zinger Burger × 2, Fries × 1",
+            TotalAmount = (int)o.TotalAmount,
+            Status = o.Status ?? "Delivered",
+            PlacedAt = o.PlacedAt
+        }).ToList() ?? GetSampleOrders();
+
+
 
     }
 
