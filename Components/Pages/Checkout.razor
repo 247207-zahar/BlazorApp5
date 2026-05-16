@@ -251,6 +251,10 @@
     protected override void OnInitialized()
     {
         var itemsFromService = CartService.GetItems();
+        if (itemsFromService != null && itemsFromService.Any())
+        {
+
+        }
     }
 
 
