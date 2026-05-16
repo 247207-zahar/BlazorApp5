@@ -639,6 +639,27 @@
                 </div>
             }
 
+            @if (activeTab == "favorites")
+            {
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2>Favorite Restaurants</h2>
+                    </div>
+                    <div class="fav-grid">
+                        @foreach (var fav in favorites)
+                        {
+                            <a href="/menu/@fav.Id" class="fav-card">
+                                <span class="fav-emoji">@fav.Emoji</span>
+                                <div class="fav-name">@fav.Name</div>
+                                <div class="fav-cuisine">@fav.Cuisine</div>
+                                <div class="fav-rating">★ @fav.Rating</div>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+
+
 
 
 
