@@ -287,4 +287,12 @@
         await Task.Delay(2000);
         Navigation.NavigateTo("/");
     }
+    public class CartItemViewModel
+    {
+        public string Name { get; set; } = "";
+        public int Price { get; set; }
+        public int Quantity { get; set; }
+        public string Emoji { get; set; } = "🍔";
+    }
+
    }
