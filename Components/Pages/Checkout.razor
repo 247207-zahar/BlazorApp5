@@ -265,5 +265,6 @@
 
     private async Task PlaceOrder()
     {
+        if (string.IsNullOrWhiteSpace(customerName) || string.IsNullOrWhiteSpace(address)) return;
 
     }
