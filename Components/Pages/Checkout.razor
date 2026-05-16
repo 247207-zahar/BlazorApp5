@@ -255,6 +255,7 @@
         {
               cartItems = itemsFromService.Select(i => new CartItemViewModel
             {
+                Name = i.Key?.Name ?? "Item",
         }
     }
 
