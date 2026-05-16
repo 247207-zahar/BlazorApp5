@@ -557,6 +557,14 @@
            </aside>
 
            <main class="dash-main">
+            <div class="dash-topbar">
+                <div>
+                    <h1>@GetGreeting(), @(customer?.Name?.Split(' ')[0] ?? "Zahra")! 👋</h1>
+                    <div class="greeting">@DateTime.Now.ToString("dddd, MMMM dd")</div>
+                </div>
+                <a href="/restaurants" class="order-btn">+ Order Food</a>
+            </div>
+
 
            </main>
 
