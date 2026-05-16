@@ -659,7 +659,31 @@
                 </div>
             }
 
-
+            @if (activeTab == "addresses")
+            {
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2>Saved Addresses</h2>
+                    </div>
+                    <div class="address-grid">
+                        @foreach (var addr in addresses)
+                        {
+                            <div class="address-card @(addr.IsDefault ? "default" : "")">
+                                @if (addr.IsDefault)
+                                {
+                                    <span class="default-badge">Default</span>
+                                }
+                                <div class="address-type">@addr.Type</div>
+                                <div class="address-text">@addr.FullAddress</div>
+                            </div>
+                        }
+                        <button class="add-new-card" @onclick="AddAddress">
+                            <span style="font-size:1.5rem;">+</span>
+                            <span>Add Address</span>
+                        </button>
+                    </div>
+                </div>
+            }
 
 
 
