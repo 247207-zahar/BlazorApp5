@@ -785,7 +785,30 @@
         var hour = DateTime.Now.Hour;
         return hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
     }
+    private string GetStatusIcon(string status) => status switch
+    {
+        "Placed" => "🕐",
+        "Preparing" => "👨‍🍳",
+        "On the way" => "🛵",
+        "Delivered" => "✓",
+        "Cancelled" => "✕",
+        _ => "📦"
+    };
 
+    private void ShowDetails(OrderViewModel order)
+    {
+        Navigation.NavigateTo($"/track-order?id={order.Id}");
+    }
+
+    private void AddAddress()
+    {
+        // Could open a modal or navigate to address form
+    }
+
+    private void Logout()
+    {
+        Navigation.NavigateTo("/login");
+    }
 
 
 
