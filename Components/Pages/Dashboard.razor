@@ -361,5 +361,39 @@
         color: #cf1322;
     }
 
+
+    .order-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        padding: 0.35rem 0.75rem;
+        border-radius: 8px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1.5px solid #e8e8e8;
+        background: #fafafa;
+        color: #555;
+        transition: all 0.15s;
+        text-decoration: none;
+    }
+
+        .action-btn:hover {
+            border-color: #d4380d;
+            color: #d4380d;
+            background: #fff5f0;
+        }
+
+        .action-btn.primary {
+            background: #d4380d;
+            color: #fff;
+            border-color: #d4380d;
+        }
+
+            .action-btn.primary:hover {
+                background: #b83209;
+            }
    
 </style>
