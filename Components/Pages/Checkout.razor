@@ -256,6 +256,7 @@
               cartItems = itemsFromService.Select(i => new CartItemViewModel
             {
                 Name = i.Key?.Name ?? "Item",
+                Price = (int)(i.Key?.Price ?? 0),
         }
     }
 
