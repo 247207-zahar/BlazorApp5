@@ -245,4 +245,5 @@
     private string selectedPayment = "cash";
     private bool isPlacing = false;
     private bool showSuccess = false;
+    private int Subtotal => cartItems.Sum(i => i.Price * i.Quantity);
 }
