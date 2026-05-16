@@ -248,4 +248,12 @@
     private int Subtotal => cartItems.Sum(i => i.Price * i.Quantity);
     private int Total => Subtotal + (Subtotal > 0 ? 80 : 0);
 
+    protected override void OnInitialized()
+    {
+
+    }
+
+
+
+
 }
