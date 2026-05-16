@@ -588,6 +588,62 @@
                 </div>
             </div>
 
+            @if (activeTab == "orders")
+            {
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2>My Orders</h2>
+                        <div class="filter-tabs">
+                            <button class="filter-tab @(orderFilter == "all" ? "active" : "")" @onclick='() => orderFilter = "all"'>All</button>
+                            <button class="filter-tab @(orderFilter == "active" ? "active" : "")" @onclick='() => orderFilter = "active"'>Active</button>
+                            <button class="filter-tab @(orderFilter == "delivered" ? "active" : "")" @onclick='() => orderFilter = "delivered"'>Delivered</button>
+                        </div>
+                    </div>
+
+                    @foreach (var order in FilteredOrders)
+                    {
+                        <div class="order-row">
+                            <div class="order-restaurant-img">@order.RestaurantEmoji</div>
+                            <div class="order-info">
+                                <div class="order-name">@order.RestaurantName</div>
+                                <div class="order-items">@order.ItemsSummary</div>
+                                <div class="order-date">@order.PlacedAt.ToString("MMM dd, yyyy · hh:mm tt")</div>
+                            </div>
+                            <div>
+                                <span class="status-badge status-@order.Status.ToLower().Replace(" ", "-")">
+                                    @GetStatusIcon(order.Status) @order.Status
+                                </span>
+                            </div>
+                            <div class="order-amount">Rs. @order.TotalAmount.ToString("N0")</div>
+                            <div class="order-actions">
+                                @if (order.Status == "Delivered")
+                                {
+                                    <a href="/restaurants" class="action-btn primary">Reorder</a>
+                                }
+                                @if (order.Status != "Delivered" && order.Status != "Cancelled")
+                                {
+                                    <a href="/track-order" class="action-btn primary">Track</a>
+                                }
+                                <button class="action-btn" @onclick="() => ShowDetails(order)">Details</button>
+                            </div>
+                        </div>
+                    }
+
+                    @if (!FilteredOrders.Any())
+                    {
+                        <div class="empty-state">
+                            <div style="font-size:2.5rem;margin-bottom:0.5rem;">📭</div>
+                            <div>No orders found</div>
+                        </div>
+                    }
+                </div>
+            }
+
+
+
+
+
+
 
            </main>
 
