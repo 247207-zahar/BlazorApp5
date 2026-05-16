@@ -749,6 +749,13 @@
             PlacedAt = o.PlacedAt
         }).ToList() ?? GetSampleOrders();
 
+        favorites = new List<FavoriteViewModel>
+        {
+            new() { Id = 1, Name = "KFC Pakistan", Emoji = "🍗", Cuisine = "Fast Food", Rating = "4.5" },
+            new() { Id = 2, Name = "Pizza Hut", Emoji = "🍕", Cuisine = "Pizza", Rating = "4.3" },
+            new() { Id = 3, Name = "Biryani Centre", Emoji = "🍛", Cuisine = "Desi", Rating = "4.7" },
+            new() { Id = 4, Name = "Subway", Emoji = "🥖", Cuisine = "Sandwiches", Rating = "4.1" },
+        };
 
 
     }
