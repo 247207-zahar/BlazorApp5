@@ -12,3 +12,6 @@ namespace BlazorApp5.Services
         private readonly Dictionary<MenuItem, int> _items = new();
 
         public event Action? OnCartChanged;
+
+        // Menu.razor ke loop ke liye items return karega
+        public Dictionary<MenuItem, int> GetItems() => _items;
