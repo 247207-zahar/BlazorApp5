@@ -32,3 +32,13 @@ namespace BlazorApp5.Services
             }
             NotifyChange
 
+        public void ClearCart()
+        {
+            _items.Clear();
+            NotifyChange();
+        }
+
+        private void NotifyChange() => OnCartChanged?.Invoke();
+    }
+}
+
