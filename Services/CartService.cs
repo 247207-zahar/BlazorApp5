@@ -25,4 +25,10 @@ namespace BlazorApp5.Services
             {
                 _items[item]++;
             }
+            else
+            {
+                // Warna naya item add karo
+                _items.Add(item, 1);
+            }
+            NotifyChange
 
