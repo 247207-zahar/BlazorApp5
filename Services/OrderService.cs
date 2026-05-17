@@ -18,3 +18,9 @@ namespace BlazorApp5.Services
 
         // Total quantity count karne ke liye
         public int ItemCount => _items.Values.Sum();
+
+        // Total price calculate karne ke liye (Price * Quantity)
+        public decimal Total => _items.Sum(entry => entry.Key.Price * entry.Value);
+
+        public void AddItem(MenuItem item)
+        {
