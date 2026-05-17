@@ -24,3 +24,16 @@ namespace BlazorApp5.Services
 
         public void AddItem(MenuItem item)
         {
+
+            // Agar item pehle se cart mein hai toh quantity barhao
+            if (_items.ContainsKey(item))
+            {
+                _items[item]++;
+            }
+            else
+            {
+                // Warna naya item add karo
+                _items.Add(item, 1);
+            }
+            NotifyChange();
+        }
