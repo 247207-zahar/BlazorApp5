@@ -15,3 +15,6 @@ namespace BlazorApp5.Services
 
         // Menu.razor ke loop ke liye items return karega
         public Dictionary<MenuItem, int> GetItems() => _items;
+
+        // Total quantity count karne ke liye
+        public int ItemCount => _items.Values.Sum();
