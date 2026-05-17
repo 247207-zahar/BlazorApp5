@@ -33,12 +33,12 @@
         margin-bottom: 2.5rem;
     }
 
-        .checkout-header h1 {
-            font-family: 'Sora', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #d4380d;
-        }
+    .checkout-header h1 {
+        font-family: 'Sora', sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #d4380d;
+    }
 
     .checkout-grid {
         display: grid;
@@ -48,7 +48,6 @@
         margin: 0 auto;
     }
 
-    /* Fixed Media Query */
     @@media (max-width: 900px) {
         .checkout-grid {
             grid-template-columns: 1fr;
@@ -76,7 +75,7 @@
         margin-bottom: 1rem;
     }
 
-        .form-group label {
+    .form-group label {
             display: block;
             font-size: 0.8rem;
             font-weight: 500;
@@ -119,6 +118,7 @@
         border-bottom: 1px solid #f0f0f0;
     }
 
+
     .cart-item-img {
         width: 50px;
         height: 50px;
@@ -128,6 +128,7 @@
         align-items: center;
         justify-content: center;
     }
+
 
     .place-order-btn {
         width: 100%;
@@ -157,25 +158,24 @@
     }
 </style>
 
-<div class="checkout-root">
+        <div class="checkout-root">
     <div class="checkout-header">
         <h1>🛒 Your Cart</h1>
         <p>Review your order and complete checkout</p>
     </div>
 
-    @if (cartItems == null || !cartItems.Any())
+       @if (cartItems == null || !cartItems.Any())
     {
         <div class="section-card" style="max-width:500px;margin:0 auto; text-align:center;">
             <p>Your cart is empty!</p>
             <a href="/" class="place-order-btn" style="text-decoration:none; margin-top:10px;">Go to Menu</a>
         </div>
     }
-    else
-    {
-        <div class="checkout-grid">
-            <div>
-                <div class="section-card">
-                    <div class="section-title">📍 Delivery Details</div>
+    else{
+    <div class="checkout-grid">
+        <div>
+            <div class="section-card">
+                <div class="section-title"> Delivery Details</div>
                     <div class="form-group">
                         <label>Full Name</label>
                         <input type="text" @bind="customerName" />
@@ -190,18 +190,18 @@
                     </div>
                 </div>
 
-                <div class="section-card">
-                    <div class="section-title">💳 Payment Method</div>
-                    <div class="payment-options">
-                        <div class="payment-option @(selectedPayment == "cash" ? "selected" : "")" @onclick='() => selectedPayment = "cash"'>💵<br />Cash</div>
-                        <div class="payment-option @(selectedPayment == "card" ? "selected" : "")" @onclick='() => selectedPayment = "card"'>💳<br />Card</div>
-                        <div class="payment-option @(selectedPayment == "easypaisa" ? "selected" : "")" @onclick='() => selectedPayment = "easypaisa"'>📱<br />Mobile</div>
+            <div class="section-card">
+                    <div class="section-title">Payment Method</div>
+                <div class="payment-options">
+                        <div class="payment-option @(selectedPayment == "cash" ? "selected" : "")" @onclick='() => selectedPayment = "cash"'><br />Cash</div>
+                        <div class="payment-option @(selectedPayment == "card" ? "selected" : "")" @onclick='() => selectedPayment = "card"'><br />Card</div>
+                        <div class="payment-option @(selectedPayment == "easypaisa" ? "selected" : "")" @onclick='() => selectedPayment = "easypaisa"'><br />Mobile</div>
                     </div>
-                </div>
             </div>
+        </div>
 
             <div class="section-card">
-                <div class="section-title">🧾 Order Summary</div>
+                <div class="section-title"> Order Summary</div>
                 @foreach (var item in cartItems)
                 {
                     <div class="cart-item">
@@ -220,21 +220,21 @@
                         <span>Total</span><span>Rs. @Total</span>
                     </div>
                 </div>
-
                 <button class="place-order-btn" @onclick="PlaceOrder" disabled="@isPlacing" style="margin-top:20px;">
                     @(isPlacing ? "Processing..." : "Place Order →")
                 </button>
-            </div>
-        </div>
+                </div>
+    </div>
+    
     }
-</div>
+        </div>
 
 @if (showSuccess)
 {
     <div class="success-toast">✓ Order placed! Redirecting...</div>
 }
 
-@code {
+ @code{
     private List<CartItemViewModel> cartItems = new();
     private string customerName = "";
     private string phone = "";
@@ -245,7 +245,6 @@
     private string selectedPayment = "cash";
     private bool isPlacing = false;
     private bool showSuccess = false;
-
     private int Subtotal => cartItems.Sum(i => i.Price * i.Quantity);
     private int Total => Subtotal + (Subtotal > 0 ? 80 : 0);
 
@@ -256,7 +255,7 @@
         {
             cartItems = itemsFromService.Select(i => new CartItemViewModel
             {
-             Name = i.Key?.Name ?? "Item",
+                Name = i.Key?.Name ?? "Item",
                 Price = (int)(i.Key?.Price ?? 0),
                 Quantity = i.Value,
                 Emoji = "🍔"
@@ -267,21 +266,19 @@
     private async Task PlaceOrder()
     {
         if (string.IsNullOrWhiteSpace(customerName) || string.IsNullOrWhiteSpace(address)) return;
-
         isPlacing = true;
 
         var order = new Order
-        {
-            // Yahan 'Address' ki jagah 'DeliveryAddress' likhein
-            DeliveryAddress = $"{address}, {area}, {city}",
-            CustomerName = customerName,
-            Phone = phone,
-            Notes = notes,
-            PaymentMethod = selectedPayment,
-            TotalAmount = Total,
-            Status = "Placed",
-            PlacedAt = DateTime.Now
-        };
+            {
+                DeliveryAddress = $"{address}, {area}, {city}",
+                CustomerName = customerName,
+                Phone = phone,
+                Notes = notes,
+                PaymentMethod = selectedPayment,
+                TotalAmount = Total,
+                Status = "Placed",
+                PlacedAt = DateTime.Now
+            };
 
         await OrderService.PlaceOrderAsync(order);
         CartService.ClearCart();
@@ -297,4 +294,5 @@
         public int Quantity { get; set; }
         public string Emoji { get; set; } = "🍔";
     }
-}
+
+   }

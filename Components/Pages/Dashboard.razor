@@ -23,7 +23,6 @@
         color: #1a1a1a;
     }
 
-    /* Sidebar */
     .dash-layout {
         display: grid;
         grid-template-columns: 240px 1fr;
@@ -138,7 +137,6 @@
         font-weight: 500;
     }
 
-    /* Main content */
     .dash-main {
         padding: 2rem;
         overflow-y: auto;
@@ -185,7 +183,6 @@
             background: #b83209;
         }
 
-    /* Stats */
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -222,7 +219,6 @@
         margin-top: 4px;
     }
 
-    /* Orders Table */
     .section-card {
         background: #fff;
         border-radius: 18px;
@@ -365,6 +361,7 @@
         color: #cf1322;
     }
 
+
     .order-actions {
         display: flex;
         gap: 0.5rem;
@@ -399,7 +396,6 @@
                 background: #b83209;
             }
 
-    /* Favorites */
     .fav-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -447,7 +443,6 @@
             margin-top: 4px;
         }
 
-    /* Addresses */
     .address-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -521,12 +516,12 @@
         padding: 2rem;
         color: #ccc;
     }
+   
 </style>
 
 <div class="dash-root">
     <div class="dash-layout">
-        <!-- Sidebar -->
-        <aside class="dash-sidebar">
+           <aside class="dash-sidebar">
             <div class="sidebar-logo">🐼 FoodPanda</div>
 
             <div class="sidebar-profile">
@@ -536,7 +531,6 @@
                     <div class="profile-email">@(customer?.Email ?? "zahra@email.com")</div>
                 </div>
             </div>
-
             <span class="nav-section-label">Main</span>
             <button class="nav-item @(activeTab == "orders" ? "active" : "")" @onclick='() => activeTab = "orders"'>
                 <span class="nav-icon">📦</span> My Orders
@@ -558,10 +552,11 @@
             <button class="nav-item" style="color:#cf1322;" @onclick="Logout">
                 <span class="nav-icon">🚪</span> Logout
             </button>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="dash-main">
+
+           </aside>
+
+           <main class="dash-main">
             <div class="dash-topbar">
                 <div>
                     <h1>@GetGreeting(), @(customer?.Name?.Split(' ')[0] ?? "Zahra")! 👋</h1>
@@ -570,7 +565,6 @@
                 <a href="/restaurants" class="order-btn">+ Order Food</a>
             </div>
 
-            <!-- Stats -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-label">Total Orders</div>
@@ -594,7 +588,6 @@
                 </div>
             </div>
 
-            <!-- Orders Tab -->
             @if (activeTab == "orders")
             {
                 <div class="section-card">
@@ -646,7 +639,6 @@
                 </div>
             }
 
-            <!-- Favorites Tab -->
             @if (activeTab == "favorites")
             {
                 <div class="section-card">
@@ -667,7 +659,6 @@
                 </div>
             }
 
-            <!-- Addresses Tab -->
             @if (activeTab == "addresses")
             {
                 <div class="section-card">
@@ -694,7 +685,7 @@
                 </div>
             }
 
-            <!-- Profile Tab -->
+
             @if (activeTab == "profile")
             {
                 <div class="section-card" style="max-width:550px;">
@@ -728,9 +719,11 @@
                     </div>
                 </div>
             }
-        </main>
+
+           </main>
     </div>
 </div>
+
 
 @code {
     private string activeTab = "orders";
@@ -742,7 +735,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Load from OrderService — sample data for demo
         customer = new Customer { Name = "Zahra Ali", Email = "zahra@email.com", Phone = "+92 311 2345678" };
 
         var serviceOrders = await OrderService.GetCustomerOrdersAsync(customer.Id);
@@ -764,6 +756,7 @@
             new() { Id = 3, Name = "Biryani Centre", Emoji = "🍛", Cuisine = "Desi", Rating = "4.7" },
             new() { Id = 4, Name = "Subway", Emoji = "🥖", Cuisine = "Sandwiches", Rating = "4.1" },
         };
+
 
         addresses = new List<AddressViewModel>
         {
@@ -792,7 +785,6 @@
         var hour = DateTime.Now.Hour;
         return hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
     }
-
     private string GetStatusIcon(string status) => status switch
     {
         "Placed" => "🕐",
@@ -837,7 +829,6 @@
         public string Status { get; set; } = "";
         public DateTime PlacedAt { get; set; }
     }
-
     public class FavoriteViewModel
     {
         public int Id { get; set; }
@@ -846,12 +837,12 @@
         public string Cuisine { get; set; } = "";
         public string Rating { get; set; } = "";
     }
-
     public class AddressViewModel
     {
         public string Type { get; set; } = "";
         public string FullAddress { get; set; } = "";
         public bool IsDefault { get; set; }
     }
-}
 
+
+}

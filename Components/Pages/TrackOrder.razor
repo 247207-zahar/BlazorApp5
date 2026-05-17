@@ -2,251 +2,226 @@
 @rendermode InteractiveServer
 @using BlazorApp5.Models
 @using BlazorApp5.Services
-
 <PageTitle>Restaurants - FoodPanda</PageTitle>
+
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
-
-<style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    .rest-page {
-        font-family: 'DM Sans', sans-serif;
-        background: #fef6f0;
-        min-height: 100vh;
-        padding: 2rem;
-    }
-
-    .top-bar {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-    }
-
-        .top-bar h1 {
-            font-family: 'Sora', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            flex: 1;
-        }
-
-    .search-input {
-        padding: 0.65rem 1.1rem;
-        border: 1.5px solid #e8e8e8;
-        border-radius: 50px;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 0.9rem;
-        outline: none;
-        background: #fff;
-        width: 260px;
-    }
-
-        .search-input:focus {
-            border-color: #d4380d;
-        }
-
-    .filters {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-        margin-bottom: 1.5rem;
-    }
-
-    .filter-btn {
-        padding: 0.45rem 1rem;
-        border-radius: 50px;
-        border: 1.5px solid #e8e8e8;
-        background: #fff;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: #555;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-        .filter-btn.active {
-            background: #d4380d;
-            color: #fff;
-            border-color: #d4380d;
-        }
-
-        .filter-btn:hover:not(.active) {
-            border-color: #d4380d;
-            color: #d4380d;
-        }
-
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1.5rem;
-    }
-
-    .card {
-        background: #fff;
-        border-radius: 18px;
-        overflow: hidden;
-        border: 1.5px solid #f0ece8;
-        cursor: pointer;
-        transition: all 0.2s;
-        text-decoration: none;
-        display: block;
-    }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
-        }
-
-    .card-img {
-        height: 150px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 4rem;
-        background: linear-gradient(135deg, #fff1e6, #ffe7cc);
-        position: relative;
-    }
-
-    .card-badge {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background: #d4380d;
-        color: #fff;
-        font-size: 0.72rem;
-        font-weight: 600;
-        padding: 3px 10px;
-        border-radius: 50px;
-    }
-
-    .card-body {
-        padding: 1rem 1.25rem 1.25rem;
-    }
-
-    .card-name {
-        font-family: 'Sora', sans-serif;
-        font-size: 1rem;
-        font-weight: 700;
-        color: #1a1a1a;
-    }
-
-    .card-cuisine {
-        font-size: 0.8rem;
-        color: #999;
-        margin-top: 2px;
-    }
-
-    .card-meta {
-        display: flex;
-        gap: 1rem;
-        margin-top: 0.75rem;
-    }
-
-    .meta-item {
-        font-size: 0.8rem;
-        color: #666;
-        display: flex;
-        align-items: center;
-        gap: 3px;
-    }
-
-    .meta-rating {
-        color: #fa8c16;
-        font-weight: 600;
-    }
-
-    .no-results {
-        text-align: center;
-        padding: 4rem;
-        color: #ccc;
-    }
-
-        .no-results div {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-</style>
-
-<div class="rest-page">
-    <div class="top-bar">
-        <h1>Restaurants 🍽️</h1>
-        <input class="search-input" type="text" @bind="searchQuery" @bind:event="oninput" placeholder="🔍 Search restaurants..." />
-    </div>
-
-    <div class="filters">
-        @foreach (var f in filters)
-        {
-            <button class="filter-btn @(activeFilter == f ? "active" : "")" @onclick="() => activeFilter = f">@f</button>
-        }
-    </div>
-
-    @if (FilteredRestaurants.Any())
-    {
-        <div class="grid">
-            @foreach (var r in FilteredRestaurants)
-            {
-                <a href="/menu/@r.Id" class="card">
-                    <div class="card-img">
-                        @r.Emoji
-                        @if (r.IsOpen)
-                        {
-                            <span class="card-badge">Open</span>
-                        }
-                        else
-                        {
-                            <span class="card-badge" style="background:#999;">Closed</span>
-                        }
-                    </div>
-                    <div class="card-body">
-                        <div class="card-name">@r.Name</div>
-                        <div class="card-cuisine">@r.Cuisine</div>
-                        <div class="card-meta">
-                            <span class="meta-item meta-rating">⭐ @r.Rating</span>
-                            <span class="meta-item">🕐 @r.DeliveryTimeMinutes min</span>
-                            <span class="meta-item">🛵 Rs. @r.DeliveryFee</span>
-                        </div>
-                    </div>
-                </a>
-            }
-        </div>
-    }
-    else
-    {
-        <div class="no-results">
-            <div>🍽️</div>
-            <p>No restaurants found</p>
-        </div>
-    }
-</div>
-
-@code {
-    private string searchQuery = "";
-    private string activeFilter = "All";
-
-    private List<string> filters = new() { "All", "Fast Food", "Desi", "Pizza", "Healthy", "Desserts" };
-
-    private List<Restaurant> allRestaurants = new()
-    {
-        new() { Id=1, Name="KFC Pakistan",     Cuisine="Fast Food",  Emoji="🍗", Rating=4.5, DeliveryTimeMinutes=25, DeliveryFee=80,  IsOpen=true  },
-        new() { Id=2, Name="Pizza Hut",        Cuisine="Pizza",      Emoji="🍕", Rating=4.3, DeliveryTimeMinutes=35, DeliveryFee=100, IsOpen=true  },
-        new() { Id=3, Name="Biryani Centre",   Cuisine="Desi",       Emoji="🍛", Rating=4.7, DeliveryTimeMinutes=40, DeliveryFee=60,  IsOpen=true  },
-        new() { Id=4, Name="McDonald's",       Cuisine="Fast Food",  Emoji="🍔", Rating=4.4, DeliveryTimeMinutes=20, DeliveryFee=80,  IsOpen=true  },
-        new() { Id=5, Name="Subway",           Cuisine="Healthy",    Emoji="🥖", Rating=4.1, DeliveryTimeMinutes=30, DeliveryFee=70,  IsOpen=true  },
-        new() { Id=6, Name="Hardee's",         Cuisine="Fast Food",  Emoji="🍔", Rating=4.2, DeliveryTimeMinutes=28, DeliveryFee=90,  IsOpen=false },
-        new() { Id=7, Name="Pie in the Sky",   Cuisine="Desserts",   Emoji="🍰", Rating=4.6, DeliveryTimeMinutes=45, DeliveryFee=120, IsOpen=true  },
-        new() { Id=8, Name="Savor Restaurant", Cuisine="Desi",       Emoji="🍲", Rating=4.8, DeliveryTimeMinutes=50, DeliveryFee=50,  IsOpen=true  },
-    };
-
-    private List<Restaurant> FilteredRestaurants => allRestaurants
-        .Where(r =>
-            (activeFilter == "All" || r.Cuisine == activeFilter) &&
-            (string.IsNullOrEmpty(searchQuery) || r.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
-        ).ToList();
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
+
+.rest-page {
+    font-family: 'DM Sans', sans-serif;
+    background: #fef6f0;
+    min-height: 100vh;
+    padding: 2rem;
+}
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+.top-bar h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    flex: 1;
+}
+.search-input {
+    padding: 0.65rem 1.1rem;
+    border: 1.5px solid #e8e8e8;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    background: #fff;
+    width: 260px;
+}
+.search-input:focus {
+    border-color: #d4380d;
+}
+.filters {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+.filter-btn {
+    padding: 0.45rem 1rem;
+    border-radius: 50px;
+    border: 1.5px solid #e8e8e8;
+    background: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.filter-btn.active {
+    background: #d4380d;
+    color: #fff;
+    border-color: #d4380d;
+}
+.filter-btn:hover:not(.active) {
+    border-color: #d4380d;
+    color: #d4380d;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+.card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1.5px solid #f0ece8;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: block;
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+.card-img {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    background: linear-gradient(135deg, #fff1e6, #ffe7cc);
+    position: relative;
+}
+.card-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #d4380d;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 50px;
+}
+.card-body {
+    padding: 1rem 1.25rem 1.25rem;
+}
+.card-name {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.card-cuisine {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 2px;
+}
+.card-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.meta-item {
+    font-size: 0.8rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+.meta-rating {
+    color: #fa8c16;
+    font-weight: 600;
+}
+.no-results {
+    text-align: center;
+    padding: 4rem;
+    color: #ccc;
+}
+
+.no-results div {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+<div class="rest-page">
+</div>
+<div class="top-bar">
+    <h1>Restaurants 🍽️</h1>
+</div>
+<input class="search-input" type="text" @bind="searchQuery" @bind:event="oninput" placeholder="🔍 Search restaurants..." />
+
+<div class="filters">
+</div>
+@foreach (var f in filters)
+{
+    <button class="filter-btn @(activeFilter == f ? "active" : "")" @onclick="() => activeFilter = f">@f</button>
+}
+@if (FilteredRestaurants.Any())
+{
+}
+else
+{
+}
+<div class="grid">
+</div>
+@foreach (var r in FilteredRestaurants)
+{
+    <a href="/menu/@r.Id" class="card">
+    </a>
+}
+<a href="/menu/@r.Id" class="card">
+</a>
+<div class="card-img">
+    @r.Emoji
+</div>
+@if (r.IsOpen)
+{
+    <span class="card-badge">Open</span>
+}
+else
+{
+    <span class="card-badge" style="background:#999;">Closed</span>
+}
+<div class="card-body">
+    <div class="card-name">@r.Name</div>
+    <div class="card-cuisine">@r.Cuisine</div>
+</div>
+<div class="card-meta">
+    <span class="meta-item meta-rating">⭐ @r.Rating</span>
+    <span class="meta-item">🕐 @r.DeliveryTimeMinutes min</span>
+    <span class="meta-item">🛵 Rs. @r.DeliveryFee</span>
+</div>
+<div class="no-results">
+    <div>🍽️</div>
+    <p>No restaurants found</p>
+</div>
+@code {
+}
+private string searchQuery = "";
+private string activeFilter = "All";
+private List<string> filters = new() { "All", "Fast Food", "Desi", "Pizza", "Healthy", "Desserts" };
+    private List<Restaurant> allRestaurants = new()
+{
+    new() { Id=1, Name="KFC Pakistan", Cuisine="Fast Food", Emoji="🍗", Rating=4.5, DeliveryTimeMinutes=25, DeliveryFee=80, IsOpen=true },
+};
+        new() { Id=2, Name="Pizza Hut", Cuisine="Pizza", Emoji="🍕", Rating=4.3, DeliveryTimeMinutes=35, DeliveryFee=100, IsOpen=true },
+
+        new() { Id=3, Name="Biryani Centre", Cuisine="Desi", Emoji="🍛", Rating=4.7, DeliveryTimeMinutes=40, DeliveryFee=60, IsOpen=true },
+
+        new() { Id=4, Name="McDonald's", Cuisine="Fast Food", Emoji="🍔", Rating=4.4, DeliveryTimeMinutes=20, DeliveryFee=80, IsOpen=true },
+
+        new() { Id=5, Name="Subway", Cuisine="Healthy", Emoji="🥖", Rating=4.1, DeliveryTimeMinutes=30, DeliveryFee=70, IsOpen=true },
+
+        new() { Id=6, Name="Hardee's", Cuisine="Fast Food", Emoji="🍔", Rating=4.2, DeliveryTimeMinutes=28, DeliveryFee=90, IsOpen=false },
+
+        new() { Id=7, Name="Pie in the Sky", Cuisine="Desserts", Emoji="🍰", Rating=4.6, DeliveryTimeMinutes=45, DeliveryFee=120, IsOpen=true },
+        new() { Id=8, Name="Savor Restaurant", Cuisine="Desi", Emoji="🍲", Rating=4.8, DeliveryTimeMinutes=50, DeliveryFee=50, IsOpen=true },
