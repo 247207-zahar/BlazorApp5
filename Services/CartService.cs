@@ -1,13 +1,16 @@
-﻿using BlazorApp5.Models;
+﻿
+using BlazorApp5.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 namespace BlazorApp5.Services
 {
     public class CartService
     {
         // Dictionary use kar rahe hain: Key = MenuItem, Value = Quantity (int)
         private readonly Dictionary<MenuItem, int> _items = new();
+
         public event Action? OnCartChanged;
 
         // Menu.razor ke loop ke liye items return karega
@@ -18,6 +21,7 @@ namespace BlazorApp5.Services
 
         // Total price calculate karne ke liye (Price * Quantity)
         public decimal Total => _items.Sum(entry => entry.Key.Price * entry.Value);
+
         public void AddItem(MenuItem item)
         {
             // Agar item pehle se cart mein hai toh quantity barhao
@@ -30,7 +34,8 @@ namespace BlazorApp5.Services
                 // Warna naya item add karo
                 _items.Add(item, 1);
             }
-            NotifyChange
+            NotifyChange();
+        }
 
         public void ClearCart()
         {
