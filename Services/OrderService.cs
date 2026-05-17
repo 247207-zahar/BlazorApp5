@@ -1,49 +1,69 @@
-﻿
-using BlazorApp5.Models;
+﻿using BlazorApp5.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlazorApp5.Services
 {
-    public class CartService
+    public class OrderService
     {
-        // Dictionary use kar rahe hain: Key = MenuItem, Value = Quantity (int)
-        private readonly Dictionary<MenuItem, int> _items = new();
+        private readonly List<Order> _orders = new();
+        private int _nextId = 1001;
 
-        public event Action? OnCartChanged;
+        public IReadOnlyList<Order> Orders => _orders.AsReadOnly();
+        public event Action? OnChange;
 
-        // Menu.razor ke loop ke liye items return karega
-        public Dictionary<MenuItem, int> GetItems() => _items;
-
-        // Total quantity count karne ke liye
-        public int ItemCount => _items.Values.Sum();
-
-        // Total price calculate karne ke liye (Price * Quantity)
-        public decimal Total => _items.Sum(entry => entry.Key.Price * entry.Value);
-
-        public void AddItem(MenuItem item)
+        // Is method ko Async banaya taaki Checkout.razor ke 'await' se match kare
+        public async Task PlaceOrderAsync(Order order)
         {
+            // ID aur initial setup
+            order.Id = _nextId++;
 
-            // Agar item pehle se cart mein hai toh quantity barhao
-            if (_items.ContainsKey(item))
+            // _orders list mein add karein
+            _orders.Insert(0, order);
+
+            NotifyChange();
+
+            // Background mein progress simulate karein
+            _ = SimulateProgress(order);
+
+            await Task.CompletedTask;
+        }
+
+        // Admin panel se order status update karne ke liye method
+        public async Task UpdateStatusAsync(int orderId, string newStatus)
+        {
+            var order = _orders.FirstOrDefault(o => o.Id == orderId);
+            if (order != null)
             {
-                _items[item]++;
+                order.Status = newStatus;
+                NotifyChange();
             }
-            else
-            {
-                // Warna naya item add karo
-                _items.Add(item, 1);
-            }
+            await Task.CompletedTask;
+        }
+
+        // Dashboard ke liye method (Jo pichle errors mein missing tha)
+        public async Task<List<Order>> GetCustomerOrdersAsync(int customerId)
+        {
+            await Task.Delay(100); // Fake delay
+            return _orders.Where(o => o.CustomerId == customerId).ToList();
+        }
+
+        public Order? GetOrder(int id) =>
+            _orders.FirstOrDefault(o => o.Id == id);
+
+        private async Task SimulateProgress(Order order)
+        {
+            await Task.Delay(6000);
+            order.Status = "On the Way";
+            NotifyChange();
+
+            await Task.Delay(10000);
+            order.Status = "Delivered";
             NotifyChange();
         }
 
-        public void ClearCart()
-        {
-            _items.Clear();
-            NotifyChange();
-        }
-
-        private void NotifyChange() => OnCartChanged?.Invoke();
+        private void NotifyChange() => OnChange?.Invoke();
     }
 }
