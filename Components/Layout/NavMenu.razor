@@ -2,7 +2,9 @@
 @implements IDisposable
 @inject NavigationManager Navigation
 @inject CartService CartService
+
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
 <style>
     .navbar {
         background: #fff;
@@ -27,6 +29,7 @@
         white-space: nowrap;
         margin-right: 2rem;
     }
+
     /* Links aur Right side buttons dono ko ek horizontal list mein lane ke liye */
     .nav-links {
         display: flex;
@@ -141,6 +144,7 @@
         <a href="/register" class="nav-btn btn-filled">Sign Up</a>
     </div>
 </nav>
+
 @code {
     protected override void OnInitialized()
     {
@@ -152,10 +156,12 @@
     {
         StateHasChanged();
     }
+
     public void Dispose()
     {
         CartService.OnCartChanged -= StateHasChanged;
         Navigation.LocationChanged -= HandleLocationChanged;
     }
 }
+
 
