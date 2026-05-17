@@ -18,3 +18,11 @@ namespace BlazorApp5.Services
 
         // Total price calculate karne ke liye (Price * Quantity)
         public decimal Total => _items.Sum(entry => entry.Key.Price * entry.Value);
+        public void AddItem(MenuItem item)
+        {
+            // Agar item pehle se cart mein hai toh quantity barhao
+            if (_items.ContainsKey(item))
+            {
+                _items[item]++;
+            }
+
