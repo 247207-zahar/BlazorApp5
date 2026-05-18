@@ -12,3 +12,42 @@
         margin: 0;
         padding: 0;
     }
+
+body {
+        font-family: 'DM Sans', sans-serif;
+        background: #fff;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #d4380d 0%, #fa541c 60%, #fa8c16 100%);
+        padding: 5rem 2rem 4rem;
+        text-align: center;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            top: -200px;
+            right: -100px;
+        }
+
+        .hero h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
