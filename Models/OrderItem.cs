@@ -9,4 +9,3 @@ public class OrderItem
     public int Quantity { get; set; }
     public string Emoji { get; set; } = "";
 }
-
