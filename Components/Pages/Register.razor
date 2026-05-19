@@ -137,3 +137,23 @@
             text-decoration: none;
         }
 </style>
+@code {
+    private string firstName = "", lastName = "", email = "", phone = "", password = "", confirmPassword = "";
+    private string errorMsg = "";
+
+    private void HandleRegister()
+    {
+        if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        { errorMsg = "Please fill in all required fields."; return; }
+
+        if (password != confirmPassword)
+        { errorMsg = "Passwords do not match."; return; }
+
+        if (password.Length < 6)
+        { errorMsg = "Password must be at least 6 characters."; return; }
+
+        // Save customer — replace with real service call later
+        var customer = new Customer { Name = $"{firstName} {lastName}", Email = email, Phone = phone };
+        Navigation.NavigateTo("/dashboard");
+    }
+}
